@@ -105,12 +105,25 @@ button:hover{
   margin-top:10px;
 }
 
-/* Mobil ekran ayarları */
+/* PNG resimleri */
+.my-image{
+  position:fixed; 
+  width:60px;
+  height:auto;
+  z-index:5;
+}
+
+/* Örnek pozisyonlar */
+#png1 { top:10%; left:5%; }
+#png2 { top:20%; right:10%; }
+#png3 { bottom:15%; left:40%; }
+
 @media (max-width: 600px){
   h1 { font-size:6vw; }
   button { font-size:5vw; padding:10px 15px; }
   .message { font-size:5vw; }
   .small-note { font-size:4vw; }
+  .my-image { width:12vw; } 
 }
 </style>
 </head>
@@ -118,6 +131,10 @@ button:hover{
 <body>
 
 <canvas id="stars"></canvas>
+
+<img src="png1.png" id="png1" class="my-image">
+<img src="png2.png" id="png2" class="my-image">
+<img src="png3.png" id="png3" class="my-image">
 
 <div class="container" id="mainContainer">
   <h1>Seni bu boktan şeylere maruz bıraktığım için özür dilerim.</h1>
@@ -176,7 +193,7 @@ function firstChoice(isAffettim){
   msg.classList.add("glow");
 
   if(isAffettim){
-    msg.innerHTML="💖🐱🎀 ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖";
+    msg.innerHTML="💖🐱🎀 affettigin için ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖";
   }else{
     msg.innerHTML="💖🎀🐱 karşıma çıkan en güzel şey olduğun için teşekkür ederim 🐱🎀💖";
   }
@@ -218,7 +235,8 @@ function yesFlow(){
     "<div style='display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:black;color:white;text-align:center;padding:20px;'>"+
       "<div style='font-size:6vw;line-height:1.6;word-wrap:break-word;'>"+cokText+"</div>"+
       "<div style='font-size:12vw;margin-top:30px;color:#ff1493;text-shadow:0 0 30px #ff1493;'>SEVİYORUM</div>"+
-      "<div class='glow blink' style='margin-top:40px;font-size:6vw;'>💖🐱🎀 affettigin icin ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖💖💖</div>"+
+      "<div class='glow blink' style='margin-top:40px;font-size:6vw;overflow-wrap:break-word;'>💖🐱🎀 affettigin için ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖💖💖</div>"+
+      "<img src='png1.png' style='margin-top:20px;width:15vw;height:auto;display:block;'/>"+
     "</div>";
   }else{
     document.getElementById("mainContainer").innerHTML=
