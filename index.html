@@ -117,7 +117,7 @@ button:hover{
   100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 5px #ff1493); }
 }
 
-/* Son ekran arka plan png2 */
+/* Son ekran arka plan png2 ve yazılar için yarı saydam kutular */
 #finalScreen{
   position:fixed;
   top:0;
@@ -134,6 +134,13 @@ button:hover{
   text-align:center;
   padding:20px;
 }
+#finalScreen .textBlock{
+  background: rgba(0,0,0,0.5); /* yarı saydam siyah */
+  padding: 10px 15px;
+  border-radius:10px;
+  display:inline-block;
+}
+
 @media (max-width: 600px){
   h1 { font-size:6vw; }
   button { font-size:5vw; padding:10px 15px; }
@@ -241,9 +248,9 @@ function yesFlow(){
     for(let i=0;i<120;i++){ cokText+="çok"; }
     document.body.innerHTML=
     "<div id='finalScreen'>"+
-      "<div style='font-size:6vw;line-height:1.6;word-wrap:break-word;'>"+cokText+"</div>"+
-      "<div style='font-size:12vw;margin-top:30px;color:#ff1493;text-shadow:0 0 30px #ff1493;'>SEVİYORUM</div>"+
-      "<div class='glow blink' style='margin-top:40px;font-size:6vw;overflow-wrap:break-word;'>💖🐱🎀 affettigin için ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖💖💖</div>"+
+      "<div class='textBlock' style='font-size:6vw;line-height:1.6;word-wrap:break-word;'>"+cokText+"</div>"+
+      "<div class='textBlock' style='font-size:12vw;margin-top:30px;color:#ff1493;text-shadow:0 0 30px #ff1493;'>SEVİYORUM</div>"+
+      "<div class='textBlock glow blink' style='margin-top:40px;font-size:6vw;overflow-wrap:break-word;'>💖🐱🎀 affettigin için ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖💖💖</div>"+
       "<img src='png1.png' id='finalPng'/>"+
     "</div>";
   }else{
