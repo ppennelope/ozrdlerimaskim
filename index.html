@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>...</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  text-align:center;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+.container{
+  max-width:900px;
+  padding:20px;
+}
+
+h1{
+  font-weight:300;
+  margin-bottom:40px;
+  font-size:24px;
+  line-height:1.5;
+}
+
+button{
+  padding:12px 25px;
+  margin:10px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+#yesBtn{background:white;color:black}
+#noBtn{background:#222;color:white;border:1px solid #555}
+
+.message{
+  margin-top:25px;
+  font-size:22px;
+  display:none;
+}
+
+.glow{
+  animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff69b4,0 0 20px #ff69b4;}
+  to{text-shadow:0 0 25px #ff1493,0 0 50px #ff1493;}
+}
+
+@keyframes blink{
+  50%{opacity:0;}
+}
+
+.blink{
+  animation:blink 1s infinite;
+}
+
+.fullscreen{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  border-radius:0;
+  font-size:40px;
+  z-index:10;
+}
+
+.small-note{
+  font-size:12px;
+  opacity:0.6;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container" id="mainContainer">
+  <h1>Seni bu boktan şeylere maruz bıraktığım için özür dilerim.</h1>
+  <div id="firstButtons">
+    <button onclick="firstChoice(true)">Affettim</button>
+    <button onclick="firstChoice(false)">Bir daha yapma salak</button>
+  </div>
+  <div class="message" id="thankYou"></div>
+</div>
+
+<script>
+
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars=[];
+for(let i=0;i<120;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*1.5,
+    d:Math.random()*0.5
+  });
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  for(let i=0;i<stars.length;i++){
+    let s=stars[i];
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.y+=s.d;
+    if(s.y>canvas.height){
+      s.y=0;
+      s.x=Math.random()*canvas.width;
+    }
+  }
+}
+setInterval(drawStars,33);
+
+let noClickCount=0;
+
+function firstChoice(isAffettim){
+  document.getElementById("firstButtons").style.display="none";
+  const msg=document.getElementById("thankYou");
+  msg.style.display="block";
+  msg.classList.add("glow");
+
+  if(isAffettim){
+    msg.innerHTML="💖🐱🎀 ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖";
+  }else{
+    msg.innerHTML="💖🎀🐱 karşıma çıkan en güzel şey olduğun için teşekkür ederim 🐱🎀💖";
+  }
+
+  setTimeout(showSecondScreen,5000);
+}
+
+function showSecondScreen(){
+  document.getElementById("mainContainer").innerHTML=
+    "<h1>Affettin mi?</h1>"+
+    "<button id='yesBtn' onclick='yesFlow()'>Evet</button>"+
+    "<button id='noBtn' onclick='noGrow()'>Hayır</button>"+
+    "<div class='small-note' id='note'>(Hayıra basmayı dene)</div>";
+}
+
+function noGrow(){
+  noClickCount++;
+  const yesBtn=document.getElementById("yesBtn");
+  const noBtn=document.getElementById("noBtn");
+  const note=document.getElementById("note");
+
+  yesBtn.style.transform="scale("+(1 + noClickCount*0.8)+")";
+
+  if(noClickCount===4){
+    yesBtn.classList.add("fullscreen");
+    noBtn.style.display="none";
+    note.innerText="Şimdi de eveti dene ❤️";
+  }
+}
+
+function yesFlow(){
+  if(noClickCount>=4){
+    let cokText="Seni ";
+    for(let i=0;i<120;i++){
+      cokText+="çok";
+    }
+
+    document.body.innerHTML=
+    "<div style='display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:black;color:white;text-align:center;padding:20px;'>"+
+      "<div style='font-size:22px;line-height:1.6;word-wrap:break-word;'>"+cokText+"</div>"+
+      "<div style='font-size:80px;margin-top:30px;color:#ff1493;text-shadow:0 0 30px #ff1493;'>SEVİYORUM</div>"+
+      "<div class='glow blink' style='margin-top:40px;font-size:28px;'>💖🐱🎀 affettigin icin ck tsk ederm SANA BAYILIYORUM KADINIM 🎀🐱💖💖💖</div>"+
+    "</div>";
+  }else{
+    document.getElementById("mainContainer").innerHTML=
+      "<h1>Affettin mi?</h1>"+
+      "<button id='yesBtn' onclick='yesFlow()'>Evet</button>"+
+      "<button id='noBtn' onclick='noGrow()'>Hayır</button>"+
+      "<div class='small-note'>(Şimdi de hayırı dene)</div>";
+  }
+}
+
+</script>
+</body>
+</html>
